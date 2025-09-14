@@ -3,17 +3,17 @@ import Image from "next/image";
 function SidebarUserInfo() {
   return (
     <div className="p-4 border-t bg-white lg:hidden">
-      <div className="flex items-center gap-3 mb-4 relative w-10 h-10">
-        <div>
+      <div className="flex items-center gap-3 mb-4">
+        <div className="relative w-10 h-10 flex-shrink-0">
           <Image
-            className="object-cover"
+            className="object-cover rounded-full"
             src="/images/userIcon.png"
             alt="ユーザーアイコン"
             fill={true}
             sizes="48px"
           />
         </div>
-        <div className="ml-10">
+        <div className="flex-1 min-w-0">
           <p className="font-medium text-base truncate">ゆう</p>
           <p className="text-sm text-gray-500 truncate">sample@example.com</p>
         </div>
