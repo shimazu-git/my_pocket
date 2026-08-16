@@ -1,15 +1,20 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  serverExternalPackages: ["@prisma/client", "@prisma/adapter-pg", "pg"],
+  outputFileTracingIncludes: {
+    "/*": ["./app/generated/prisma/**/*"],
+    "/api/**/*": ["./app/generated/prisma/**/*"],
+  },
   images: {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "**", // 全ドメインを許可（開発用）
+        hostname: "**",
       },
       {
         protocol: "http",
-        hostname: "**", // 全ドメインを許可（開発用）
+        hostname: "**",
       },
     ],
   },
