@@ -5,6 +5,7 @@ interface HomeProps {
   searchParams: Promise<{
     listtype?: string;
     keyword?: string;
+    page?: string;
   }>;
 }
 
