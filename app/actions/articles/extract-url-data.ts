@@ -1,5 +1,5 @@
 "use server";
-import { JSDOM } from "jsdom";
+import { parse } from "node-html-parser";
 
 export async function extractUrlData(formData: FormData) {
   //const url = "https://yu-and-you.com/sigma1424mm/";
@@ -18,8 +18,7 @@ export async function extractUrlData(formData: FormData) {
     const html = await response.text();
 
     // DOMに変換
-    const dom = new JSDOM(html);
-    const document = dom.window.document;
+    const document = parse(html);
 
     const getMetaContent = (property: string) => {
       const selectors = [

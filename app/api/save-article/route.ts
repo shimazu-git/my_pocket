@@ -3,12 +3,28 @@ import { saveArticle } from "@/app/actions/articles/save-article";
 import { auth } from "@/auth";
 import { NextRequest, NextResponse } from "next/server";
 
+export const maxDuration = 30;
+
+function jsonWithCors(
+  body: unknown,
+  init?: { status?: number },
+) {
+  return NextResponse.json(body, {
+    status: init?.status ?? 200,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type",
+    },
+  });
+}
+
 export async function POST(request: NextRequest) {
   try {
     const session = await auth();
 
     if (!session?.user?.id) {
-      return NextResponse.json(
+      return jsonWithCors(
         {
           success: false,
           error: "ユーザーが認証されていません",
@@ -33,7 +49,7 @@ export async function POST(request: NextRequest) {
     const result = await saveArticle(articleData, session?.user.id);
 
     if (!result.success) {
-      return NextResponse.json(
+      return jsonWithCors(
         {
           success: false,
           error: result.errorMessage,
@@ -42,13 +58,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    return NextResponse.json({
+    return jsonWithCors({
       success: true,
       message: "データを受け取りました。",
     });
   } catch (error) {
     console.error(error);
-    return NextResponse.json(
+    return jsonWithCors(
       {
         success: false,
         error:
@@ -62,8 +78,7 @@ export async function POST(request: NextRequest) {
 }
 
 //CORSの設定
-export async function OPTIONS(request: NextRequest) {
-  console.log(request);
+export async function OPTIONS() {
   return new NextResponse(null, {
     status: 200,
     headers: {
