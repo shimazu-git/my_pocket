@@ -3,11 +3,12 @@
 import Image from "next/image";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useEffect } from "react";
+import { Suspense, useEffect, useState } from "react";
 import ExtensionSuccess from "../components/ExtensionSuccess";
 
 function SignInContent() {
   const { data: session, status } = useSession();
+  const [isAnonymousLoading, setIsAnonymousLoading] = useState(false);
 
   const router = useRouter();
 
@@ -77,6 +78,23 @@ function SignInContent() {
             className="w-full flex justify-center items-center py-3 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
           >
             Googleでサインイン
+          </button>
+
+          <div className="mt-4 mb-4 flex items-center">
+            <div className="flex-1 border-t border-gray-200" />
+            <span className="px-3 text-xs text-gray-400">または</span>
+            <div className="flex-1 border-t border-gray-200" />
+          </div>
+
+          <button
+            onClick={() => {
+              setIsAnonymousLoading(true);
+              signIn("anonymous");
+            }}
+            disabled={isAnonymousLoading}
+            className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-md shadow-sm bg-blue-600 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-60 disabled:cursor-not-allowed"
+          >
+            {isAnonymousLoading ? "サインイン中..." : "匿名でサインイン"}
           </button>
         </div>
       </div>

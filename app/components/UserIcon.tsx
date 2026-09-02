@@ -34,9 +34,11 @@ function UserIcon() {
         <div className="absolute right-0 top-5 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 border">
           <div className="px-4 py-2 border-b">
             <p className="text-sm font-medium text-gray-900">
-              {session?.user?.name}
+              {session?.user?.name || "ゲスト"}
             </p>
-            <p className="text-sm text-gray-500">{session?.user?.email}</p>
+            <p className="text-sm text-gray-500">
+              {session?.user?.email || "匿名ユーザー"}
+            </p>
           </div>
           <button
             onClick={() => signOut({ callbackUrl: "/signin" })}
