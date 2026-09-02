@@ -24,10 +24,10 @@ function SidebarUserInfo() {
         </div>
         <div className="flex-1 min-w-0">
           <p className="font-medium text-base truncate">
-            {session?.user?.name}
+            {session?.user?.name || "ゲスト"}
           </p>
           <p className="text-sm text-gray-500 truncate">
-            {session?.user?.email}
+            {session?.user?.email || "匿名ユーザー"}
           </p>
         </div>
       </div>
